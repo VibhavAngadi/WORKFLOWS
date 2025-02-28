@@ -3,7 +3,6 @@ name: revenera_deployment
 on: 
   release:
     types: [prereleased, released]
-
   workflow_call: 
     inputs:
       region: 
