@@ -1,4 +1,4 @@
-name: Separate Event Trigger Jobs
+name: Event Trigger and Reusable Workflow Caller
 
 on:
   release:
@@ -9,28 +9,32 @@ on:
 jobs:
   release_released:
     if: ${{ github.event_name == 'release' && github.event.action == 'released' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Echo Released Trigger
-        run: echo "Triggered by release event:released"
+    uses: ./.github/workflows/reusable-echo.yml
+    with:
+      region: "us-west-1"
+      stage: "production"
+      silo: "frontend"
 
   release_prereleased:
     if: ${{ github.event_name == 'release' && github.event.action == 'prereleased' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Echo Prereleased Trigger
-        run: echo "Triggered by release event:prereleased"
+    uses: ./.github/workflows/reusable-echo.yml
+    with:
+      region: "us-east-1"
+      stage: "staging"
+      silo: "backend"
 
   workflow_dispatch_job:
     if: ${{ github.event_name == 'workflow_dispatch' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Echo Workflow Dispatch Trigger
-        run: echo "Triggered by event:workflow_dispatch"
+    uses: ./.github/workflows/reusable-echo.yml
+    with:
+      region: "eu-central-1"
+      stage: "development"
+      silo: "api"
 
   workflow_call_job:
     if: ${{ github.event_name == 'workflow_call' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Echo Workflow Call Trigger
-        run: echo "Triggered by event:workflow_call"
+    uses: ./.github/workflows/reusable-echo.yml
+    with:
+      region: "ap-south-1"
+      stage: "testing"
+      silo: "misc"
