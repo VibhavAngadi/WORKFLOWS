@@ -27,7 +27,7 @@ jobs:
     if: ${{ github.event_name == 'release' && github.event.action == 'prereleased' }}
     strategy:
       matrix:
-        region: ["us-east-1", "us-west-2"]
+        region: [ "${{ inputs.region }}" ]
         silo: ["backend", "db"]
     uses: ./.github/workflows/reusable.yml
     with:
