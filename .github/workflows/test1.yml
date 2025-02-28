@@ -1,0 +1,14 @@
+name: test event trigger workflow 
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        region: ["asdas", "dasdsad"]
+
+    uses: ./.github/workflows/test.yml
+    with:
+      region: ${{ matrix.region }}
