@@ -20,7 +20,7 @@ on:
 
 jobs:
   deployService:
-    if: ${{ github.event.workflow_call == true }}
+    if: ${{ github.event_name == "workflow_call" }}
     uses: ./.github/workflows/reusable.yml
     with: 
       region : ${{ inputs.region }} 
