@@ -4,7 +4,11 @@ on:
   release:
     types: [released, prereleased]
   workflow_dispatch: {}
-  workflow_call: {}
+  workflow_call: 
+    inputs:
+      region:
+        required: true
+        type: string
 
 jobs:
   release_released:
