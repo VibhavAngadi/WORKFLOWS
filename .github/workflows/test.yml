@@ -1,0 +1,36 @@
+name: Separate Event Trigger Jobs
+
+on:
+  release:
+    types: [released, prereleased]
+  workflow_dispatch: {}
+  workflow_call: {}
+
+jobs:
+  release_released:
+    if: ${{ github.event_name == 'release' && github.event.action == 'released' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo Released Trigger
+        run: echo "Triggered by release event: released"
+
+  release_prereleased:
+    if: ${{ github.event_name == 'release' && github.event.action == 'prereleased' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo Prereleased Trigger
+        run: echo "Triggered by release event: prereleased"
+
+  workflow_dispatch_job:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo Workflow Dispatch Trigger
+        run: echo "Triggered by event: workflow_dispatch"
+
+  workflow_call_job:
+    if: ${{ github.event_name == 'workflow_call' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo Workflow Call Trigger
+        run: echo "Triggered by event: workflow_call"
