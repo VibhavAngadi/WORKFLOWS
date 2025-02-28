@@ -20,7 +20,7 @@ jobs:
     uses: ./.github/workflows/reusable-echo.yml
     with:
       region: "us-east-1"
-      stage: "staging"
+      stage: "uat"
       silo: "backend"
 
   workflow_dispatch_job:
@@ -28,7 +28,7 @@ jobs:
     uses: ./.github/workflows/reusable-echo.yml
     with:
       region: "eu-central-1"
-      stage: "development"
+      stage: "staging"
       silo: "api"
 
   workflow_call_job:
@@ -36,5 +36,5 @@ jobs:
     uses: ./.github/workflows/reusable-echo.yml
     with:
       region: "ap-south-1"
-      stage: "testing"
+      stage: "staging"
       silo: "misc"
