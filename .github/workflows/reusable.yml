@@ -19,7 +19,7 @@ on:
 jobs:
   echo_inputs:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.stage }}
+    environment: ${{ inputs.stage }}-${{ inputs.region }}-${{ inputs.silo }}
     steps:
       - name: Echo input parameters
         run: |
