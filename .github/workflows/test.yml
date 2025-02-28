@@ -27,7 +27,7 @@ jobs:
     if: ${{ github.event_name == 'release' && github.event.action == 'prereleased' }}
     strategy:
       matrix:
-        region: [ "${{ inputs.region }}" ]
+        region: ["ap-south-1", "ap-northeast-1"] 
         silo: ["backend", "db"]
     uses: ./.github/workflows/reusable.yml
     with:
@@ -51,7 +51,7 @@ jobs:
     if: ${{ github.event_name == 'workflow_call' }}
     strategy:
       matrix:
-        region: ["ap-south-1", "ap-northeast-1"]
+        region:  [ "${{ inputs.region }}" ]
         silo: ["misc", "monitoring"]
     uses: ./.github/workflows/reusable.yml
     with:
