@@ -11,7 +11,7 @@ jobs:
          region: ["us-west-2","eu-east-2"]
          stage: [ "staging" ] 
          silo: ["silo-1", "silo-2"]
-    uses: ./.github/workflows/reusable.yml 
+    uses: ./.github/workflows/rev_deploy.yml 
     with: 
       region : ${{ matrix.region }} 
       stage: ${{ matrix.stage }} 
