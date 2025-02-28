@@ -19,6 +19,7 @@ on:
 jobs:
   echo_inputs:
     runs-on: ubuntu-latest
+    environment: ${{ inputs.stage }}
     steps:
       - name: Echo input parameters
         run: |
