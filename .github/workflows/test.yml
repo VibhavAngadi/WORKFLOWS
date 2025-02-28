@@ -12,25 +12,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Echo Released Trigger
-        run: echo "Triggered by release event: released"
+        run: echo "Triggered by release event:released"
 
   release_prereleased:
     if: ${{ github.event_name == 'release' && github.event.action == 'prereleased' }}
     runs-on: ubuntu-latest
     steps:
       - name: Echo Prereleased Trigger
-        run: echo "Triggered by release event: prereleased"
+        run: echo "Triggered by release event:prereleased"
 
   workflow_dispatch_job:
     if: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
       - name: Echo Workflow Dispatch Trigger
-        run: echo "Triggered by event: workflow_dispatch"
+        run: echo "Triggered by event:workflow_dispatch"
 
   workflow_call_job:
     if: ${{ github.event_name == 'workflow_call' }}
     runs-on: ubuntu-latest
     steps:
       - name: Echo Workflow Call Trigger
-        run: echo "Triggered by event: workflow_call"
+        run: echo "Triggered by event:workflow_call"
