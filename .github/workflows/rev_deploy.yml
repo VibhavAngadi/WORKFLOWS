@@ -1,0 +1,30 @@
+name: revenera_deployment
+
+on: 
+  release:
+    types: [prereleased, released]
+
+  workflow_call: 
+    inputs:
+      region: 
+        required: true 
+        type: string 
+
+      stage: 
+        required: true
+        type: string 
+
+      silo:
+        required: true
+        type: string 
+
+jobs:
+  deployService:
+    if: ${{ github.event.release.prereleased == true }}
+    uses: ./.github/workflows/reusable.yml
+    with: 
+      region : ${{ inputs.region }} 
+      stage: ${{ inputs.stage }}
+      silo: ${{ inputs.silo }}
+      
+    
