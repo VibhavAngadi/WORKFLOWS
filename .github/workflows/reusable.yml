@@ -1,0 +1,27 @@
+name: Reusable Echo Workflow
+
+on:
+  workflow_call:
+    inputs:
+      region:
+        description: 'The region input'
+        required: true
+        type: string
+      stage:
+        description: 'The stage input'
+        required: true
+        type: string
+      silo:
+        description: 'The silo input'
+        required: true
+        type: string
+
+jobs:
+  echo_inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo input parameters
+        run: |
+          echo "Region: ${{ inputs.region }}"
+          echo "Stage: ${{ inputs.stage }}"
+          echo "Silo: ${{ inputs.silo }}"
