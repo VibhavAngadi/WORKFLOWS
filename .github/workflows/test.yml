@@ -9,32 +9,48 @@ on:
 jobs:
   release_released:
     if: ${{ github.event_name == 'release' && github.event.action == 'released' }}
+    strategy:
+      matrix:
+        region: ["r1", "r2"]
+        silo: ["s1", "s2"]
     uses: ./.github/workflows/reusable.yml
     with:
-      region: "us-west-1"
+      region: ${{ matrix.region }}
       stage: "production"
-      silo: "frontend"
+      silo: ${{ matrix.silo }}
 
   release_prereleased:
     if: ${{ github.event_name == 'release' && github.event.action == 'prereleased' }}
+    strategy:
+      matrix:
+        region: ["us-east-1", "us-west-2"]
+        silo: ["backend", "db"]
     uses: ./.github/workflows/reusable.yml
     with:
-      region: "us-east-1"
+      region: ${{ matrix.region }}
       stage: "uat"
-      silo: "backend"
+      silo: ${{ matrix.silo }}
 
   workflow_dispatch_job:
     if: ${{ github.event_name == 'workflow_dispatch' }}
+    strategy:
+      matrix:
+        region: ["eu-central-1", "eu-west-1"]
+        silo: ["api", "cache"]
     uses: ./.github/workflows/reusable.yml
     with:
-      region: "eu-central-1"
+      region: ${{ matrix.region }}
       stage: "staging"
-      silo: "api"
+      silo: ${{ matrix.silo }}
 
   workflow_call_job:
     if: ${{ github.event_name == 'workflow_call' }}
+    strategy:
+      matrix:
+        region: ["ap-south-1", "ap-northeast-1"]
+        silo: ["misc", "monitoring"]
     uses: ./.github/workflows/reusable.yml
     with:
-      region: "ap-south-1"
+      region: ${{ matrix.region }}
       stage: "staging"
-      silo: "misc"
+      silo: ${{ matrix.silo }}
