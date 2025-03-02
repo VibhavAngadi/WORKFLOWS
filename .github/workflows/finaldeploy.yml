@@ -1,0 +1,38 @@
+name: Final Deploy equivalent to 401-deploy-service
+
+on: 
+  workflow_call:
+    inputs:
+      image_tag:
+        description: "Image Tag"
+        type: string
+        required: true
+        default: latest
+
+      region:
+        description: "AWS Region"
+        type: string
+        required: true
+
+      stage: 
+        description: "Environment"
+        type: string
+        required: true
+
+      silo:
+        description: "Silo"
+        type: string
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Echo all inputs
+        run: |
+          echo the image tag is ${{ inputs.image_tag }}
+          echo the region is ${{ inputs.region }} 
+          echo the stage is ${{ inputs.stage }} 
+          echo the silo is ${{ inputs.silo }}
+      
