@@ -1,0 +1,14 @@
+name: Final Start Deploy Trigger equivalent to 203-build-and-megre
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploystarttrigger:
+    uses: ./.github/workflows/finaldeployt.yml
+    with:
+      image_tag: latest
+      region: "*"
+      silo: "*"
+      stage: staging
+      
