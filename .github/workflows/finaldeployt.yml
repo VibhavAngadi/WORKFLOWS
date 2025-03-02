@@ -75,8 +75,8 @@ jobs:
     with:
       image_tag: latest
       stage: uat
-      region: ${{ matrix.REGION }}
-      silo_id: ${{ matrix.SILO_ID }}
+      region: ${{ matrix.region }}
+      silo_id: ${{ matrix.silo_id }}
 
   deployServicePROD:
     if: ${{ github.event_name == 'release' && github.event.action == 'released' }}
@@ -106,8 +106,8 @@ jobs:
     with:
       image_tag: latest
       stage: prod
-      region: ${{ matrix.REGION }}
-      silo_id: ${{ matrix.SILO_ID }}
+      region: ${{ matrix.region }}
+      silo_id: ${{ matrix.silo_id }}
 
   deployServiceSTAGING:
     if: ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch') &&
@@ -151,8 +151,8 @@ jobs:
     with:
       image_tag: latest
       stage: uat
-      region: ${{ matrix.REGION }}
-      silo_id: ${{ matrix.SILO_ID }}
+      region: ${{ matrix.region }}
+      silo_id: ${{ matrix.silo_id }}
 
   manualDeployServicePROD:
     if: ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch') &&
@@ -160,7 +160,7 @@ jobs:
          (github.event.inputs.region == '*' || inputs.region == '*') &&
          (github.event.inputs.silo_id == '*' || inputs.silo_id == '*') }}
     permissions: write-all
-   strategy:
+    strategy:
       matrix:
         include:
           - region: us-west-2
@@ -185,9 +185,8 @@ jobs:
     with:
       image_tag: latest
       stage: prod
-      region: ${{ matrix.REGION }}
-      silo_id: ${{ matrix.SILO_ID }}
-
+      region: ${{ matrix.region }}
+      silo_id: ${{ matrix.silo_id }}
   deployService:
     if: ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch') &&
          (github.event.inputs.region != '*' && inputs.region != '*') &&
