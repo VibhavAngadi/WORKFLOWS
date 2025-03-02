@@ -57,8 +57,20 @@ jobs:
     permissions: write-all
     strategy:
       matrix:
-        REGION: ["us-west-2", "eu-west-1"]
-        SILO_ID: ["silo-1", "silo-2", "silo-3", "silo-4"]
+        include:
+          - region: us-west-2
+            silo_id: silo-1
+          - region: us-west-2
+            silo_id: silo-2
+          - region: us-west-2
+            silo_id: silo-3
+          - region: us-west-2
+            silo_id: silo-4
+          - region: eu-west-1
+            silo_id: silo-1
+          - region: eu-west-1
+            silo_id: silo-2
+         
     uses: ./.github/workflows/finaldeploy.yml
     with:
       image_tag: latest
@@ -71,8 +83,25 @@ jobs:
     permissions: write-all
     strategy:
       matrix:
-        REGION: ["us-west-2", "eu-west-1"]
-        SILO_ID: ["silo-1", "silo-2", "silo-3", "silo-4", "silo-5", "silo-6", "silo-7"]
+        include:
+          - region: us-west-2
+            silo_id: silo-1
+          - region: us-west-2
+            silo_id: silo-2
+          - region: us-west-2
+            silo_id: silo-3
+          - region: us-west-2
+            silo_id: silo-4
+          - region: us-west-2
+            silo_id: silo-5
+          - region: us-west-2
+            silo_id: silo-6
+          - region: us-west-2
+            silo_id: silo-7
+          - region: eu-west-1
+            silo_id: silo-1
+          - region: eu-west-1
+            silo_id: silo-2
     uses: ./.github/workflows/finaldeploy.yml
     with:
       image_tag: latest
@@ -105,8 +134,19 @@ jobs:
     permissions: write-all
     strategy:
       matrix:
-        REGION: ["us-west-2", "eu-west-1"]
-        SILO_ID: ["silo-1", "silo-2", "silo-3", "silo-4"]
+        include:
+          - region: us-west-2
+            silo_id: silo-1
+          - region: us-west-2
+            silo_id: silo-2
+          - region: us-west-2
+            silo_id: silo-3
+          - region: us-west-2
+            silo_id: silo-4
+          - region: eu-west-1
+            silo_id: silo-1
+          - region: eu-west-1
+            silo_id: silo-2
     uses: ./.github/workflows/finaldeploy.yml
     with:
       image_tag: latest
@@ -120,10 +160,27 @@ jobs:
          (github.event.inputs.region == '*' || inputs.region == '*') &&
          (github.event.inputs.silo_id == '*' || inputs.silo_id == '*') }}
     permissions: write-all
-    strategy:
+   strategy:
       matrix:
-        REGION: ["us-west-2", "eu-west-1"]
-        SILO_ID: ["silo-1", "silo-2", "silo-3", "silo-4", "silo-5", "silo-6", "silo-7"]
+        include:
+          - region: us-west-2
+            silo_id: silo-1
+          - region: us-west-2
+            silo_id: silo-2
+          - region: us-west-2
+            silo_id: silo-3
+          - region: us-west-2
+            silo_id: silo-4
+          - region: us-west-2
+            silo_id: silo-5
+          - region: us-west-2
+            silo_id: silo-6
+          - region: us-west-2
+            silo_id: silo-7
+          - region: eu-west-1
+            silo_id: silo-1
+          - region: eu-west-1
+            silo_id: silo-2
     uses: ./.github/workflows/finaldeploy.yml
     with:
       image_tag: latest
