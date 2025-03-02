@@ -17,7 +17,8 @@ on:
   
 
 jobs:
-  display:
+  display: 
+    if: ${{ github.event_name == 'workflow_call' }}
     runs-on: ubuntu-latest
     steps:
       - name: Display input number using script conditionals
