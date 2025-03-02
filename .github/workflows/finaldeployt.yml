@@ -1,8 +1,8 @@
 name: Final Deploy Trigger equivalent to 301-deploy-service
 
-on: 
+on:
   release:
-    types: [released,prereleased]
+    types: [published, prereleased]
 
   workflow_call:
     inputs:
@@ -17,7 +17,7 @@ on:
         type: string
         required: true
 
-      stage: 
+      stage:
         description: "Environment"
         type: string
         required: true
@@ -40,7 +40,7 @@ on:
         type: string
         required: true
 
-      stage: 
+      stage:
         description: "Environment"
         type: string
         required: true
@@ -50,10 +50,9 @@ on:
         type: string
         required: true
 
-
 jobs:
   deployServiceUAT:
-    if: ${{ github.event.release.prereleased == true }}
+    if: ${{ github.event.release.action == 'published' || github.event.release.prereleased == true }}
     permissions: write-all
     strategy:
       matrix:
@@ -67,7 +66,7 @@ jobs:
       silo_id: ${{ matrix.SILO_ID }}
 
   deployServicePROD:
-    if: ${{ github.event.release.prereleased == true }}
+    if: ${{ github.event.release.action == 'published' || github.event.release.prereleased == true }}
     permissions: write-all
     strategy:
       matrix:
