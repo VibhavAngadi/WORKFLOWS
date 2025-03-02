@@ -7,9 +7,14 @@ jobs:
   deploystarttrigger:
     permissions: write-all
     uses: ./.github/workflows/finaldeployt.yml
+    strategy:
+      matrix:
+      
+        region: ["region-1","region-2"]
+        silo: ["SILO-ONE","SILO-TWO"]
     with:
       image_tag: latest
-      region: "*"
-      silo_id: "*"
+      region: ${{ matrix.region }}
+      silo_id: ${{ matrix.silo }}
       stage: uat
       
