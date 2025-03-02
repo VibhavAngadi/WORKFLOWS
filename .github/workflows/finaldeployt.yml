@@ -57,8 +57,8 @@ jobs:
     permissions: write-all
     strategy:
       matrix:
-        REGION: ["us-west-2","eu-west-1"]
-        SILO_ID: ["silo-1","silo-2","silo-3","silo-4"]
+        REGION: ["us-west-2", "eu-west-1"]
+        SILO_ID: ["silo-1", "silo-2", "silo-3", "silo-4"]
     uses: ./.github/workflows/finaldeploy.yml
     with:
       image_tag: latest
@@ -71,8 +71,8 @@ jobs:
     permissions: write-all
     strategy:
       matrix:
-        REGION: ["us-west-2","eu-west-1"]
-        SILO_ID: ["silo-1","silo-2","silo-3","silo-4","silo-5","silo-6","silo-7"]
+        REGION: ["us-west-2", "eu-west-1"]
+        SILO_ID: ["silo-1", "silo-2", "silo-3", "silo-4", "silo-5", "silo-6", "silo-7"]
     uses: ./.github/workflows/finaldeploy.yml
     with:
       image_tag: latest
@@ -81,7 +81,10 @@ jobs:
       silo_id: ${{ matrix.SILO_ID }}
 
   deployServiceSTAGING:
-    if: ${{ github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch' }} && ${{ github.event.inputs.stage == 'staging' || inputs.stage == 'staging' }} && ${{ github.event.inputs.region == '*' || inputs.region == '*' }} && ${{ github.event.inputs.silo_id == '*' || inputs.silo_id == '*' }}
+    if: ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch') &&
+         (github.event.inputs.stage == 'staging' || inputs.stage == 'staging') &&
+         (github.event.inputs.region == '*' || inputs.region == '*') &&
+         (github.event.inputs.silo_id == '*' || inputs.silo_id == '*') }}
     permissions: write-all
     strategy:
       matrix:
@@ -94,14 +97,16 @@ jobs:
       region: ${{ matrix.REGION }}
       silo_id: ${{ matrix.SILO_ID }}
 
-
   manualDeployServiceUAT:
-    if: ${{ github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch' }} && ${{ github.event.inputs.stage == 'uat' || inputs.stage == 'uat' }} && ${{ github.event.inputs.region == '*' || inputs.region == '*' }} && ${{ github.event.inputs.silo_id == '*' || inputs.silo_id == '*' }}
+    if: ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch') &&
+         (github.event.inputs.stage == 'uat' || inputs.stage == 'uat') &&
+         (github.event.inputs.region == '*' || inputs.region == '*') &&
+         (github.event.inputs.silo_id == '*' || inputs.silo_id == '*') }}
     permissions: write-all
     strategy:
       matrix:
-        REGION: ["us-west-2","eu-west-1"]
-        SILO_ID: ["silo-1","silo-2","silo-3","silo-4"]
+        REGION: ["us-west-2", "eu-west-1"]
+        SILO_ID: ["silo-1", "silo-2", "silo-3", "silo-4"]
     uses: ./.github/workflows/finaldeploy.yml
     with:
       image_tag: latest
@@ -110,12 +115,15 @@ jobs:
       silo_id: ${{ matrix.SILO_ID }}
 
   manualDeployServicePROD:
-    if: ${{ github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch' }} && ${{ github.event.inputs.stage == 'prod' || inputs.stage == 'prod' }} && ${{ github.event.inputs.region == '*' || inputs.region == '*' }} && ${{ github.event.inputs.silo_id == '*' || inputs.silo_id == '*' }}
+    if: ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch') &&
+         (github.event.inputs.stage == 'prod' || inputs.stage == 'prod') &&
+         (github.event.inputs.region == '*' || inputs.region == '*') &&
+         (github.event.inputs.silo_id == '*' || inputs.silo_id == '*') }}
     permissions: write-all
     strategy:
       matrix:
-        REGION: ["us-west-2","eu-west-1"]
-        SILO_ID: ["silo-1","silo-2","silo-3","silo-4","silo-5","silo-6","silo-7"]
+        REGION: ["us-west-2", "eu-west-1"]
+        SILO_ID: ["silo-1", "silo-2", "silo-3", "silo-4", "silo-5", "silo-6", "silo-7"]
     uses: ./.github/workflows/finaldeploy.yml
     with:
       image_tag: latest
@@ -124,7 +132,9 @@ jobs:
       silo_id: ${{ matrix.SILO_ID }}
 
   deployService:
-    if: ${{ github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch' }}  && ${{ github.event.inputs.region != '*' || inputs.region != '*' }} && ${{ github.event.inputs.silo_id != '*' || inputs.silo_id != '*' }}
+    if: ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch') &&
+         (github.event.inputs.region != '*' || inputs.region != '*') &&
+         (github.event.inputs.silo_id != '*' || inputs.silo_id != '*') }}
     permissions: write-all
     uses: ./.github/workflows/finaldeploy.yml
     with:
@@ -132,5 +142,3 @@ jobs:
       stage: ${{ github.event.inputs.stage || inputs.stage }}
       region: ${{ github.event.inputs.region || inputs.region }}
       silo_id: ${{ github.event.inputs.silo_id || inputs.silo_id }}
-   
-    
