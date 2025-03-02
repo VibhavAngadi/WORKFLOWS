@@ -1,0 +1,136 @@
+name: Final Deploy Trigger equivalent to 301-deploy-service
+
+on: 
+  release:
+    types: [released,prereleased]
+
+  workflow_call:
+    inputs:
+      image_tag:
+        description: "Image Tag"
+        type: string
+        required: true
+        default: latest
+
+      region:
+        description: "AWS Region"
+        type: string
+        required: true
+
+      stage: 
+        description: "Environment"
+        type: string
+        required: true
+
+      silo_id:
+        description: "Silo"
+        type: string
+        required: true
+
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Image Tag"
+        type: string
+        required: true
+        default: latest
+
+      region:
+        description: "AWS Region"
+        type: string
+        required: true
+
+      stage: 
+        description: "Environment"
+        type: string
+        required: true
+
+      silo_id:
+        description: "Silo"
+        type: string
+        required: true
+
+
+jobs:
+  deployServiceUAT:
+    if: ${{ github.event.release.prereleased == true }}
+    permissions: write-all
+    strategy:
+      matrix:
+        REGION: ["us-west-2","eu-west-1"]
+        SILO_ID: ["silo-1","silo-2","silo-3","silo-4"]
+    uses: ./.github/workflows/finaldeploy.yml
+    with:
+      image_tag: latest
+      stage: uat
+      region: ${{ matrix.REGION }}
+      silo_id: ${{ matrix.SILO_ID }}
+
+  deployServicePROD:
+    if: ${{ github.event.release.prereleased == true }}
+    permissions: write-all
+    strategy:
+      matrix:
+        REGION: ["us-west-2","eu-west-1"]
+        SILO_ID: ["silo-1","silo-2","silo-3","silo-4","silo-5","silo-6","silo-7"]
+    uses: ./.github/workflows/finaldeploy.yml
+    with:
+      image_tag: latest
+      stage: prod
+      region: ${{ matrix.REGION }}
+      silo_id: ${{ matrix.SILO_ID }}
+
+  deployServiceSTAGING:
+    if: ${{ github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch' }} && ${{ github.event.inputs.stage == 'staging' || inputs.stage == 'staging' }} && ${{ github.event.inputs.region == '*' || inputs.region == '*' }} && ${{ github.event.inputs.silo_id == '*' || inputs.silo_id == '*' }}
+    permissions: write-all
+    strategy:
+      matrix:
+        REGION: [ "us-west-2" ]
+        SILO_ID: [ "silo-2" ]
+    uses: ./.github/workflows/finaldeploy.yml
+    with:
+      image_tag: latest
+      stage: staging
+      region: ${{ matrix.REGION }}
+      silo_id: ${{ matrix.SILO_ID }}
+
+
+  manualDeployServiceUAT:
+    if: ${{ github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch' }} && ${{ github.event.inputs.stage == 'uat' || inputs.stage == 'uat' }} && ${{ github.event.inputs.region == '*' || inputs.region == '*' }} && ${{ github.event.inputs.silo_id == '*' || inputs.silo_id == '*' }}
+    permissions: write-all
+    strategy:
+      matrix:
+        REGION: ["us-west-2","eu-west-1"]
+        SILO_ID: ["silo-1","silo-2","silo-3","silo-4"]
+    uses: ./.github/workflows/finaldeploy.yml
+    with:
+      image_tag: latest
+      stage: uat
+      region: ${{ matrix.REGION }}
+      silo_id: ${{ matrix.SILO_ID }}
+
+  manualDeployServicePROD:
+    if: ${{ github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch' }} && ${{ github.event.inputs.stage == 'prod' || inputs.stage == 'prod' }} && ${{ github.event.inputs.region == '*' || inputs.region == '*' }} && ${{ github.event.inputs.silo_id == '*' || inputs.silo_id == '*' }}
+    permissions: write-all
+    strategy:
+      matrix:
+        REGION: ["us-west-2","eu-west-1"]
+        SILO_ID: ["silo-1","silo-2","silo-3","silo-4","silo-5","silo-6","silo-7"]
+    uses: ./.github/workflows/finaldeploy.yml
+    with:
+      image_tag: latest
+      stage: prod
+      region: ${{ matrix.REGION }}
+      silo_id: ${{ matrix.SILO_ID }}
+
+  deployService:
+    if: ${{ github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch' }}  && ${{ github.event.inputs.region != '*' || inputs.region != '*' }} && ${{ github.event.inputs.silo_id != '*' || inputs.silo_id != '*' }}
+    permissions: write-al
+    uses: ./.github/workflows/finaldeploy.yml
+    with:
+      image_tag: ${{ github.event.inputs.image_tag || inputs.image_tag }}
+      stage: ${{ github.event.inputs.stage || inputs.stage }}
+      region: ${{ github.event.inputs.region || inputs.region }}
+      silo_id: ${{ github.event.inputs.silo_id || inputs.silo_id }}
+   
+    
