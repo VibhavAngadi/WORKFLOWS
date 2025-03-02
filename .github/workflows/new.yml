@@ -27,6 +27,17 @@ jobs:
             echo "the number is ${{ github.event.inputs.new || inputs.new }}"
           elif [ "${{ github.event.inputs.new }}" == "2" ]; then
             echo "the number is ${{ github.event.inputs.new || inputs.new }}"
+          elif [ "${{ github.event.inputs.new }}" == "*" ]; then
+            echo "the number is ${{ github.event.inputs.new || inputs.new }}"
           else
             echo "the number is ${{ github.event.inputs.new || inputs.new }}"
           fi
+
+  display1: 
+    if: ${{ github.event_name == 'workflow_call' }} || ${{ github.event_name == 'workflow_dispatch' }} && ${{ github.event.inputs.new == '*' }} || ${{ inputs.new == '*' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display input number using script conditionals
+        run: |
+          echo this is from "1"
+          echo this is from "2"        
