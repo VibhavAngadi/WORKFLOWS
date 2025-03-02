@@ -11,5 +11,5 @@ jobs:
       image_tag: latest
       region: "*"
       silo_id: "*"
-      stage: staging
+      stage: uat
       
