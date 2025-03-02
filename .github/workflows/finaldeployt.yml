@@ -111,9 +111,9 @@ jobs:
 
   deployServiceSTAGING:
     if: ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch') &&
-         (github.event.inputs.stage == 'staging' || inputs.stage == 'staging') &&
-         (github.event.inputs.region == '*' || inputs.region == '*') &&
-         (github.event.inputs.silo_id == '*' || inputs.silo_id == '*') }}
+         (inputs.stage == 'staging') &&
+         (inputs.region == '*') &&
+         (inputs.silo_id == '*') }}
     permissions: write-all
     strategy:
       matrix:
@@ -128,9 +128,9 @@ jobs:
 
   manualDeployServiceUAT:
     if: ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch') &&
-         (github.event.inputs.stage == 'uat' || inputs.stage == 'uat') &&
-         (github.event.inputs.region == '*' || inputs.region == '*') &&
-         (github.event.inputs.silo_id == '*' || inputs.silo_id == '*') }}
+         (inputs.stage == 'uat') &&
+         (inputs.region == '*') &&
+         (inputs.silo_id == '*') }}
     permissions: write-all
     strategy:
       matrix:
@@ -156,9 +156,9 @@ jobs:
 
   manualDeployServicePROD:
     if: ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch') &&
-         (github.event.inputs.stage == 'prod' || inputs.stage == 'prod') &&
-         (github.event.inputs.region == '*' || inputs.region == '*') &&
-         (github.event.inputs.silo_id == '*' || inputs.silo_id == '*') }}
+         ( inputs.stage == 'prod') &&
+         (inputs.region == '*') &&
+         (inputs.silo_id == '*') }}
     permissions: write-all
     strategy:
       matrix:
@@ -189,12 +189,12 @@ jobs:
       silo_id: ${{ matrix.silo_id }}
   deployService:
     if: ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch') &&
-         (github.event.inputs.region != '*' && inputs.region != '*') &&
-         (github.event.inputs.silo_id != '*' && inputs.silo_id != '*') }}
+         (inputs.region != '*') &&
+         (inputs.silo_id != '*') }}
     permissions: write-all
     uses: ./.github/workflows/finaldeploy.yml
     with:
-      image_tag: ${{ github.event.inputs.image_tag || inputs.image_tag }}
-      stage: ${{ github.event.inputs.stage || inputs.stage }}
-      region: ${{ github.event.inputs.region || inputs.region }}
-      silo_id: ${{ github.event.inputs.silo_id || inputs.silo_id }}
+      image_tag: ${{  inputs.image_tag }}
+      stage: ${{ inputs.stage }}
+      region: ${{ inputs.region }}
+      silo_id: ${{ inputs.silo_id }}
