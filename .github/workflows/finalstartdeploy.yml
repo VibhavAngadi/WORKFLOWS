@@ -9,6 +9,6 @@ jobs:
     with:
       image_tag: latest
       region: "*"
-      silo: "*"
+      silo_id: "*"
       stage: staging
       
