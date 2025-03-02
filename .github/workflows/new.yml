@@ -6,7 +6,15 @@ on:
       new:
         type: string
         required: true
-        default: "1"
+        default: "1" 
+  
+  workflow_call:
+    inputs:
+      new:
+        type: string
+        required: true
+        default: "1" 
+  
 
 jobs:
   display:
@@ -14,10 +22,10 @@ jobs:
     steps:
       - name: Display input number using script conditionals
         run: |
-          if [ "${{ github.event.inputs.new }}" == "1" ]; then
-            echo "the number is ${{ github.event.inputs.new }}"
+          if [ "${{ github.event.inputs.new || inputs.new}}" == "1" ]; then
+            echo "the number is ${{ github.event.inputs.new || inputs.new }}"
           elif [ "${{ github.event.inputs.new }}" == "2" ]; then
-            echo "the number is ${{ github.event.inputs.new }}"
+            echo "the number is ${{ github.event.inputs.new || inputs.new }}"
           else
-            echo "the number is ${{ github.event.inputs.new }}"
+            echo "the number is ${{ github.event.inputs.new || inputs.new }}"
           fi
