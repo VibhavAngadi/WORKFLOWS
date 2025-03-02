@@ -1,6 +1,9 @@
 name: Final Start Deploy Trigger equivalent to 203-build-and-megre
 
 on:
+  push:
+    branches:
+      main
   workflow_dispatch:
 
 jobs:
@@ -11,5 +14,4 @@ jobs:
       image_tag: latest
       region: "*"
       silo_id: "*"
-      stage: uat
-      
+      stage: staging      

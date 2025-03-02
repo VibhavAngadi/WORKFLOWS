@@ -57,34 +57,63 @@ jobs:
     permissions: write-all
     strategy:
       matrix:
-        REGION: ["us-west-2", "eu-west-1"]
-        SILO_ID: ["silo-1", "silo-2", "silo-3", "silo-4"]
+        include:
+          - region: us-west-2
+            silo_id: silo-1
+          - region: us-west-2
+            silo_id: silo-2
+          - region: us-west-2
+            silo_id: silo-3
+          - region: us-west-2
+            silo_id: silo-4
+          - region: eu-west-1
+            silo_id: silo-1
+          - region: eu-west-1
+            silo_id: silo-2
+         
     uses: ./.github/workflows/finaldeploy.yml
     with:
       image_tag: latest
-      stage: uat
-      region: ${{ matrix.REGION }}
-      silo_id: ${{ matrix.SILO_ID }}
+      stage: ${{ matrix.region == 'eu-west-1' && 'uateu' || 'uat' }}
+      region: ${{ matrix.region }}
+      silo_id: ${{ matrix.silo_id }}
 
   deployServicePROD:
     if: ${{ github.event_name == 'release' && github.event.action == 'released' }}
     permissions: write-all
     strategy:
       matrix:
-        REGION: ["us-west-2", "eu-west-1"]
-        SILO_ID: ["silo-1", "silo-2", "silo-3", "silo-4", "silo-5", "silo-6", "silo-7"]
+        include:
+          - region: us-west-2
+            silo_id: silo-1
+          - region: us-west-2
+            silo_id: silo-2
+          - region: us-west-2
+            silo_id: silo-3
+          - region: us-west-2
+            silo_id: silo-4
+          - region: us-west-2
+            silo_id: silo-5
+          - region: us-west-2
+            silo_id: silo-6
+          - region: us-west-2
+            silo_id: silo-7
+          - region: eu-west-1
+            silo_id: silo-1
+          - region: eu-west-1
+            silo_id: silo-2
     uses: ./.github/workflows/finaldeploy.yml
     with:
       image_tag: latest
-      stage: prod
-      region: ${{ matrix.REGION }}
-      silo_id: ${{ matrix.SILO_ID }}
+      stage: ${{ matrix.region == 'eu-west-1' && 'prodeu' || 'prod' }}
+      region: ${{ matrix.region }}
+      silo_id: ${{ matrix.silo_id }}
 
   deployServiceSTAGING:
-    if: ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch') &&
-         (github.event.inputs.stage == 'staging' || inputs.stage == 'staging') &&
-         (github.event.inputs.region == '*' || inputs.region == '*') &&
-         (github.event.inputs.silo_id == '*' || inputs.silo_id == '*') }}
+    if: ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+         (inputs.stage == 'staging') &&
+         (inputs.region == '*') &&
+         (inputs.silo_id == '*') }}
     permissions: write-all
     strategy:
       matrix:
@@ -99,46 +128,73 @@ jobs:
 
   manualDeployServiceUAT:
     if: ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch') &&
-         (github.event.inputs.stage == 'uat' || inputs.stage == 'uat') &&
-         (github.event.inputs.region == '*' || inputs.region == '*') &&
-         (github.event.inputs.silo_id == '*' || inputs.silo_id == '*') }}
+         (inputs.stage == 'uat') &&
+         (inputs.region == '*') &&
+         (inputs.silo_id == '*') }}
     permissions: write-all
     strategy:
       matrix:
-        REGION: ["us-west-2", "eu-west-1"]
-        SILO_ID: ["silo-1", "silo-2", "silo-3", "silo-4"]
+        include:
+          - region: us-west-2
+            silo_id: silo-1
+          - region: us-west-2
+            silo_id: silo-2
+          - region: us-west-2
+            silo_id: silo-3
+          - region: us-west-2
+            silo_id: silo-4
+          - region: eu-west-1
+            silo_id: silo-1
+          - region: eu-west-1
+            silo_id: silo-2
     uses: ./.github/workflows/finaldeploy.yml
     with:
       image_tag: latest
-      stage: uat
-      region: ${{ matrix.REGION }}
-      silo_id: ${{ matrix.SILO_ID }}
+      stage: ${{ matrix.region == 'eu-west-1' && 'uateu' || 'uat' }}
+      region: ${{ matrix.region }}
+      silo_id: ${{ matrix.silo_id }}
 
   manualDeployServicePROD:
     if: ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch') &&
-         (github.event.inputs.stage == 'prod' || inputs.stage == 'prod') &&
-         (github.event.inputs.region == '*' || inputs.region == '*') &&
-         (github.event.inputs.silo_id == '*' || inputs.silo_id == '*') }}
+         ( inputs.stage == 'prod') &&
+         (inputs.region == '*') &&
+         (inputs.silo_id == '*') }}
     permissions: write-all
     strategy:
       matrix:
-        REGION: ["us-west-2", "eu-west-1"]
-        SILO_ID: ["silo-1", "silo-2", "silo-3", "silo-4", "silo-5", "silo-6", "silo-7"]
+        include:
+          - region: us-west-2
+            silo_id: silo-1
+          - region: us-west-2
+            silo_id: silo-2
+          - region: us-west-2
+            silo_id: silo-3
+          - region: us-west-2
+            silo_id: silo-4
+          - region: us-west-2
+            silo_id: silo-5
+          - region: us-west-2
+            silo_id: silo-6
+          - region: us-west-2
+            silo_id: silo-7
+          - region: eu-west-1
+            silo_id: silo-1
+          - region: eu-west-1
+            silo_id: silo-2
     uses: ./.github/workflows/finaldeploy.yml
     with:
       image_tag: latest
-      stage: prod
-      region: ${{ matrix.REGION }}
-      silo_id: ${{ matrix.SILO_ID }}
-
+      stage:  ${{ matrix.region == 'eu-west-1' && 'prodeu' || 'prod' }}
+      region: ${{ matrix.region }}
+      silo_id: ${{ matrix.silo_id }}
   deployService:
     if: ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch') &&
-         (github.event.inputs.region != '*' && inputs.region != '*') &&
-         (github.event.inputs.silo_id != '*' && inputs.silo_id != '*') }}
+         (inputs.region != '*') &&
+         (inputs.silo_id != '*') }}
     permissions: write-all
     uses: ./.github/workflows/finaldeploy.yml
     with:
-      image_tag: ${{ github.event.inputs.image_tag || inputs.image_tag }}
-      stage: ${{ github.event.inputs.stage || inputs.stage }}
-      region: ${{ github.event.inputs.region || inputs.region }}
-      silo_id: ${{ github.event.inputs.silo_id || inputs.silo_id }}
+      image_tag: ${{  inputs.image_tag }}
+      stage: ${{ inputs.stage }}
+      region: ${{ inputs.region }}
+      silo_id: ${{ inputs.silo_id }}
