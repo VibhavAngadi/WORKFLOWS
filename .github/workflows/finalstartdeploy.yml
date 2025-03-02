@@ -5,6 +5,7 @@ on:
 
 jobs:
   deploystarttrigger:
+    permissions: write-all
     uses: ./.github/workflows/finaldeployt.yml
     with:
       image_tag: latest
