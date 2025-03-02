@@ -125,7 +125,7 @@ jobs:
 
   deployService:
     if: ${{ github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch' }}  && ${{ github.event.inputs.region != '*' || inputs.region != '*' }} && ${{ github.event.inputs.silo_id != '*' || inputs.silo_id != '*' }}
-    permissions: write-al
+    permissions: write-all
     uses: ./.github/workflows/finaldeploy.yml
     with:
       image_tag: ${{ github.event.inputs.image_tag || inputs.image_tag }}
