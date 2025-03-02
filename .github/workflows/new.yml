@@ -1,0 +1,23 @@
+name: New test
+
+on:
+  workflow_dispatch:
+    inputs:
+      new:
+        type: string
+        required: true
+        default: "1"
+
+jobs:
+  display:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display input number using script conditionals
+        run: |
+          if [ "${{ github.event.inputs.new }}" == "1" ]; then
+            echo "the number is ${{ github.event.inputs.new }}"
+          elif [ "${{ github.event.inputs.new }}" == "2" ]; then
+            echo "the number is ${{ github.event.inputs.new }}"
+          else
+            echo "the number is ${{ github.event.inputs.new }}"
+          fi
