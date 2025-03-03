@@ -110,7 +110,7 @@ jobs:
       silo_id: ${{ matrix.silo_id }}
 
   deployServiceSTAGING:
-    if: ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch') &&
+    if: ${{ (github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch' || github.event.action == 'push') &&
          (inputs.stage == 'staging') &&
          (inputs.region == '*') &&
          (inputs.silo_id == '*') }}
