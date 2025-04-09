@@ -149,7 +149,7 @@ jobs:
             silo_id: silo-2
     uses: ./.github/workflows/finaldeploy.yml
     with:
-      image_tag: latest
+      image_tag: ${{ inputs.image_tag }}
       stage: ${{ matrix.region == 'eu-west-1' && 'uateu' || 'uat' }}
       region: ${{ matrix.region }}
       silo_id: ${{ matrix.silo_id }}
@@ -183,7 +183,7 @@ jobs:
             silo_id: silo-2
     uses: ./.github/workflows/finaldeploy.yml
     with:
-      image_tag: latest
+      image_tag: ${{ inputs.image_tag }}
       stage:  ${{ matrix.region == 'eu-west-1' && 'prodeu' || 'prod' }}
       region: ${{ matrix.region }}
       silo_id: ${{ matrix.silo_id }}
