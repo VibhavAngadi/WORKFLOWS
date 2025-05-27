@@ -65,7 +65,7 @@ jobs:
         id: deploy-stack
         run: |
           # Check if stack exists
-          if aws cloudformation describe-stacks --stack-name ${{ github.event.inputs.stack-name }} 2>&1 | grep -q "does not exist"; then
+          if: aws cloudformation describe-stacks --stack-name ${{ github.event.inputs.stack-name }} 2>&1 | grep -q "does not exist"; then
             # Create new stack
             aws cloudformation create-stack \
               --stack-name ${{ github.event.inputs.stack-name }} \
@@ -127,7 +127,7 @@ jobs:
           echo "Stack Name: ${{ github.event.inputs.stack-name }}"
           
           # Check if API endpoint exists and display it
-          API_ENDPOINT=$(echo "${{ steps['stack-outputs'].outputs['api-endpoint'] }}" | tr -d '[:space:]')
+          API_ENDPOINT=$(echo "${{ steps.stack-outputs.outputs.api-endpoint }}" | tr -d '[:space:]')
           if [ ! -z "$API_ENDPOINT" ]; then
             echo "API Endpoint: $API_ENDPOINT"
           fi
